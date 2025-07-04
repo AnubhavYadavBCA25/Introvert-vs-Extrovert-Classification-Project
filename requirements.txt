@@ -6,5 +6,6 @@ scikit-learn
 flask
 joblib
 ipykernel
+python-dotenv
 
 -e .
