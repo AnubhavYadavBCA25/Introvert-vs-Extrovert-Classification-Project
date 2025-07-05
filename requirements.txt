@@ -8,5 +8,6 @@ joblib
 ipykernel
 python-dotenv
 xgboost
+plotly
 
 -e .
