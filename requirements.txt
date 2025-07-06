@@ -9,5 +9,6 @@ ipykernel
 python-dotenv
 xgboost
 plotly
+nbformat
 
 -e .
