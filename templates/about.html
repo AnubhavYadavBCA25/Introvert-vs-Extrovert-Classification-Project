@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- About Me Page (Full-width alternating sections) -->
+
+<!-- Section 1: About Developer -->
+<div class="dark-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0 img-wrapper">
+        <img src="{{ url_for('static', filename='images/me.jpg') }}" class="rounded-circle img-fluid" alt="Developer Photo" style="width: 250px; height: 250px;">
+      </div>
+      <div class="col-md-6">
+        <h2 class="section-title">About the Developer</h2>
+        <p class="lead">
+          Hey there! I'm <strong>Anubhav Yadav</strong>, a passionate BCA Data Science Graduate student from SRM IST (Delhi NCR Campus).
+          I love solving real-world problems through Data and AI. From model building to visual dashboards, I'm all about making data smart and useful 🚀
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Education -->
+<div class="light-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="section-title">🎓 Education</h2>
+        <p class="lead">
+          <strong>SRM Institute of Science & Technology</strong><br>
+          BCA - Data Science<br>
+          2022 - 2025 (CGPA: 9.67 🏅 Rank Holder)
+        </p>
+      </div>
+      <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='images/education.jpg') }}" class="img-fluid" alt="Education" width="400" height="300">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: Certifications -->
+<div class="dark-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='images/certifications.png') }}" class="img-fluid" alt="Certifications">
+      </div>
+      <div class="col-md-6">
+        <h2 class="section-title">📜 Certifications</h2>
+        <ul class="lead">
+          <li>Google Data Analytics Professional Certificate</li>
+          <li>Machine Learning Speacialization from DeepLearning.AI</li>
+          <li>Python for Data Science and Machine Learning Bootcamp from Udemy</li>
+          <li>Multiple Projects in ML, NLP, and Flask 🚀</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: Social & Portfolio Links -->
+<div class="light-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h2 class="section-title">🌐 Connect With Me</h2>
+        <p class="lead">
+          📧 Email: <a href="mailto:anubhav@example.com">Anubhav Email</a><br>
+          💼 Portfolio: <a href="https://sites.google.com/view/anubhavyadavportfolio/" target="_blank">Anubhav Portfolio</a><br>
+          🔗 LinkedIn: <a href="https://linkedin.com/in/anubhav-yadav-data-science" target="_blank">Anubhav LinkedIn</a><br>
+          🐱 GitHub: <a href="https://github.com/AnubhavYadavBCA25" target="_blank">Anubhav GitHub</a>
+        </p>
+      </div>
+      <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='images/connect.jpg') }}" class="img-fluid" alt="Connect" width="300" height="200">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer Section -->
+<footer class="dark-section text-center py-4">
+  <div class="container">
+    <p class="mb-0 text-light">© 2025 | Built with ❤️ by Anubhav Yadav</p>
+  </div>
+</footer>
+
+{% endblock %}
