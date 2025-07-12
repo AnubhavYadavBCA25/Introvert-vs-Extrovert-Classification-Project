@@ -43,3 +43,11 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
 
     except Exception as e:
         raise CustomException(e, sys)
+
+def load_objects(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            obj = joblib.load(file)
+            return obj
+    except Exception as e:
+        raise CustomException(e, sys)
