@@ -49,3 +49,13 @@ width:100%;
       height: 100%;
       object-fit: cover;
 }
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+
+.social-icons a:hover {
+    color: #0d6efd;
+}
