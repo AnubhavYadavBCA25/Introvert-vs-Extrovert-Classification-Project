@@ -10,5 +10,6 @@ python-dotenv
 xgboost
 plotly
 nbformat
+google-generativeai
 
 -e .
