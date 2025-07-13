@@ -13,13 +13,13 @@
 
     <div class="container py-5">
         <h1 class="text-center fw-bold mb-5">🧠 Personality Classification using Behavioral Traits</h1>
-
+    </div>
         <!-- Section 1: Project Overview (Left Text, Right Image) -->
-        <div class="row align-items-center dark-section">
+        <div class="row align-items-center dark-section" style="padding-left: 250px;">
             <div class="col-md-6">
                 <h2 class="section-title">📌 Project Overview</h2>
-                <p class="lead">This project aims to classify individuals as Introverts or Extroverts using behavioral data such as social activity, screen time, and personal habits.</p>
-                <p class="lead">It combines traditional machine learning with modern GenAI features to provide a hybrid, intelligent personality assessment tool.</p>
+                <p class="lead" style="text-align: justify; text-justify: inter-word;">This project aims to classify individuals as Introverts or Extroverts using behavioral data such as social activity, screen time, and personal habits.</p>
+                <p class="lead" style="text-align: justify; text-justify: inter-word;">It combines traditional machine learning with modern GenAI features to provide a hybrid, intelligent personality assessment tool.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
                 <img src="{{ url_for('static', filename='images/overview.png') }}" alt="Project Overview" class="section-img">
@@ -51,7 +51,7 @@
 
 
         <!-- Section 3: Tech Stacks (Left Text, Right Image) -->
-        <div class="row align-items-center dark-section">
+        <div class="row align-items-center dark-section" style="padding-left: 250px;">
             <div class="col-md-6">
                 <h2 class="section-title">🛠️ Tech Stack</h2>
                 <ul class="lead">
@@ -74,28 +74,28 @@
                 <p class="lead text-center">Visual insights into the distribution of introverts and extroverts, behavioral correlations, and feature patterns.</p>
                 <div class="text-center">
                     <div class="text-center my-4">
-                        <img src="{{ url_for('static', filename='images/boxplot.png') }}" class="img-fluid" alt="Boxplot">
+                        <img src="{{ url_for('static', filename='images/boxplot.png') }}" class="img-fluid" alt="Boxplot" width="1000" height="800">
                         <p class="fst-italic mt-2">*Distribution spread of numeric features across Introverts and Extroverts*</p>
                     </div>
 
                     <div class="text-center my-4">
-                        <img src="{{ url_for('static', filename='images/countplot.png') }}" class="img-fluid" alt="Countplot" width="1398" height="985">
+                        <img src="{{ url_for('static', filename='images/countplot.png') }}" class="img-fluid" alt="Countplot" width="1000" height="800">
                         <p class="fst-italic mt-2">*Distribution of class labels in the dataset*</p>
                     </div>
 
                     <div class="text-center my-4">
-                        <img src="{{ url_for('static', filename='images/histplot.png') }}" class="img-fluid" alt="Histogram">
+                        <img src="{{ url_for('static', filename='images/histplot.png') }}" class="img-fluid" alt="Histogram"  width="1000" height="800">
                         <p class="fst-italic mt-2">*Frequency distribution of numeric features by personality*</p>
                     </div>
 
                     <div class="text-center my-4">
-                        <img src="{{ url_for('static', filename='images/violinplot.png') }}" class="img-fluid" alt="Violin Plot">
+                        <img src="{{ url_for('static', filename='images/violinplot.png') }}" class="img-fluid" alt="Violin Plot" width="1000" height="800">
                         <p class="fst-italic mt-2">*Density and distribution comparison between personality types*</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
 </body>
 </html>

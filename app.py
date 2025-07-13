@@ -1,10 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 from src.exception import CustomException
 import sys
+import os
+from dotenv import load_dotenv
+# Load environment variables
+load_dotenv()
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
+app.secret_key = GEMINI_API_KEY
 
 # Home Route - Index Page
 @app.route('/')
@@ -29,23 +35,29 @@ def predict():
             print(input_df)
 
             predict_pipeline = PredictPipeline()
-            prediction = predict_pipeline.predict(input_df)
-            predicted_class = prediction[0]
+            prediction = predict_pipeline.predict(input_df)[0]
+            
+            result_data = input_df.copy()
+            result_data["Prediction"] = prediction
 
-            if predicted_class == 0:
-                predicted_class = 'Extrovert'
-            elif predicted_class == 1:
-                predicted_class = 'Introvert'
-            else:
-                predicted_class = 'Unknown'
+            # 5. Store for next page (use session or global var)
+            session["result_data"] = result_data.to_dict(orient="records")[0]
+            print(result_data)
 
-            return render_template('result.html', prediction=predicted_class)
+            return render_template('result.html', result=result_data.to_dict(orient="records")[0])
         
         except Exception as e:
             raise CustomException(e, sys)
     
-    elif request.method == 'GET':
-        return render_template('predict.html')
+    return render_template('predict.html')
+
+@app.route('/genai', methods=['GET', 'POST'])
+def genai():
+    result_data = session.get("result_data", None)
+    if result_data is None:
+        return redirect('/')  # fallback
+
+    return render_template('genai.html', result_data=result_data)
 
 @app.route('/about')
 def about():

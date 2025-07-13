@@ -1,20 +1,44 @@
-
 {% extends "base.html" %}
 {% block content %}
 
 <!-- Result Display Section -->
-<div class="dark-section">
-  <div class="container text-center">
-    <h2 class="section-title">🧾 Personality Prediction Result</h2>
-    {% if prediction == 'Introvert' %}
-      <img src="{{ url_for('static', filename='images/introvert.jpg') }}" class="img-fluid mb-4" style="max-width: 300px;">
-      <h4 class="text-light">You are an <strong>Introvert</strong> 🧍‍♂️</h4>
-    {% elif prediction == 'Extrovert' %}
-      <img src="{{ url_for('static', filename='images/extrovert.jpg') }}" class="img-fluid mb-4" style="max-width: 300px;">
-      <h4 class="text-light">You are an <strong>Extrovert</strong> 🗣️</h4>
-    {% else %}
-      <h4 class="text-warning">Unable to determine your personality. Please try again.</h4>
-    {% endif %}
+<div class="dark-section py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5 mt-5">🧾 Personality Prediction Result</h2>
+
+    <div class="row justify-content-center align-items-center">
+
+      <!-- Image & Prediction -->
+      <div class="col-md-4 text-center">
+        {% if result['Prediction'] == 1 %}
+          <img src="{{ url_for('static', filename='images/introvert.jpg') }}" class="img-fluid mb-4" style="max-width: 250px;">
+          <h4 class="text-light">You are an <strong>Introvert</strong> 🧍‍♂️</h4>
+        {% elif result['Prediction'] == 0 %}
+          <img src="{{ url_for('static', filename='images/extrovert.jpg') }}" class="img-fluid mb-4" style="max-width: 250px;">
+          <h4 class="text-light">You are an <strong>Extrovert</strong> 🗣️</h4>
+        {% else %}
+          <h4 class="text-warning">Unable to determine your personality. Please try again.</h4>
+        {% endif %}
+      </div>
+
+      <!-- User Input Data -->
+      <div class="col-md-6">
+        <div class="card bg-light shadow p-4">
+          <h5 class="mb-3">Your Responses:</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Time Spent Alone: {{ result['Time_spent_Alone'] }} hrs</li>
+            <li class="list-group-item">Stage Fear: {{ result['Stage_fear'] }}</li>
+            <li class="list-group-item">Social Event Attendance: {{ result['Social_event_attendance'] }}</li>
+            <li class="list-group-item">Going Outside: {{ result['Going_outside'] }}</li>
+            <li class="list-group-item">Drained After Socializing: {{ result['Drained_after_socializing'] }}</li>
+            <li class="list-group-item">Friends Circle Size: {{ result['Friends_circle_size'] }}</li>
+            <li class="list-group-item">Post Frequency: {{ result['Post_frequency'] }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
 
