@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Prediction Form Section -->
+<div class="light-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="section-title text-center">🧠 Predict Your Personality</h2>
+        <form action="/predict" method="post">
+
+          <!-- Time Spent Alone -->
+          <div class="mb-4">
+            <label for="time_spent_alone" class="form-label">Time Spent Alone (in hours)</label>
+            <input type="number" class="form-control" name="time_spent_alone" step="0.1" required>
+          </div>
+
+          <!-- Stage Fear -->
+          <div class="mb-4">
+            <label for="stage_fear" class="form-label">Do you have stage fear?</label>
+            <select class="form-select" name="stage_fear" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <!-- Social Event Attendance -->
+          <div class="mb-4">
+            <label for="social_event_attendance" class="form-label">Social Event Attendance (in past month)</label>
+            <input type="number" class="form-control" name="social_event_attendance" required>
+          </div>
+
+          <!-- Going Outside -->
+          <div class="mb-4">
+            <label for="going_outside" class="form-label">How many times do you go outside in a week?</label>
+            <input type="number" class="form-control" name="going_outside" required>
+          </div>
+
+          <!-- Drained After Socializing -->
+          <div class="mb-4">
+            <label for="drained_after_socializing" class="form-label">Do you feel drained after socializing?</label>
+            <select class="form-select" name="drained_after_socializing" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <!-- Friends Circle Size -->
+          <div class="mb-4">
+            <label for="friends_circle_size" class="form-label">Friends Circle Size</label>
+            <input type="number" class="form-control" name="friends_circle_size" required>
+          </div>
+
+          <!-- Post Frequency -->
+          <div class="mb-4">
+            <label for="post_frequency" class="form-label">How often do you post on social media? (per week)</label>
+            <input type="number" class="form-control" name="post_frequency" required>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-dark px-5 py-2">Predict</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
