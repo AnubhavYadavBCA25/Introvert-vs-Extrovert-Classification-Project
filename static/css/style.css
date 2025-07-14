@@ -59,3 +59,13 @@ width:100%;
 .social-icons a:hover {
     color: #0d6efd;
 }
+
+#downloadBtn {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+
+#downloadBtn:hover {
+    transform: translateY(-2px);
+    background-color: #0b5ed7; /* dark blue hover OR keep as black/green */
+}

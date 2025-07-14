@@ -4,13 +4,63 @@ from src.exception import CustomException
 import sys
 import os
 from dotenv import load_dotenv
+import google.generativeai as genai
+import markdown
 # Load environment variables
 load_dotenv()
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+genai.configure(api_key=GEMINI_API_KEY)
 
+# Safety Settings
+safety_settings = [
+    {
+        "category": "HARM_CATEGORY_HARASSMENT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+        "category": "HARM_CATEGORY_HATE_SPEECH",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+]
+
+# Generation Configurations
+generation_config = {
+    "temperature": 0.4,
+    "top_p": 0.95,
+    "top_k": 30,
+    "max_output_tokens": 1000,
+    "response_mime_type": "text/plain"
+}
+
+system_instruction = (
+        "You are an expert personality therapist. Based on the user's personality traits and prediction, "
+        "suggest 5 personalized activities, habits, or tips that can help the user either embrace or develop their personality. "
+        "Provide short, practical, and empathetic points. Make sure the tone is positive and growth-focused.\n"
+        "Format it in simple bullet points.\n\n" \
+        "--> Format the output in proper Markdown with:\n"
+        "- Bullet points using '*'\n"
+        "- Use **bold** for important words\n"
+        "- No numbering\n"
+    )
+
+# Initialize Flask app and setup API key
 app = Flask(__name__, static_folder='static', template_folder='templates')
-
 app.secret_key = GEMINI_API_KEY
+
+# Gemini GenAI Model Configuration
+model = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config=generation_config,
+    safety_settings=safety_settings
+)
 
 # Home Route - Index Page
 @app.route('/')
@@ -32,7 +82,7 @@ def predict():
             )
 
             input_df = data.get_data_as_df()
-            print(input_df)
+            # print(input_df)
 
             predict_pipeline = PredictPipeline()
             prediction = predict_pipeline.predict(input_df)[0]
@@ -57,7 +107,35 @@ def genai():
     if result_data is None:
         return redirect('/')  # fallback
 
-    return render_template('genai.html', result_data=result_data)
+    suggestions = ""
+
+    try:
+        # --- Step 1: Prompt generation ---
+        user_input_summary = "\n".join([
+            f"{key.replace('_', ' ')}: {value}"
+            for key, value in result_data.items() if key != "Prediction"
+        ])
+        personality = result_data["Prediction"]
+
+        prompt = f"User is predicted to be an '{personality}'.\nHere are the details:\n{user_input_summary}. \nDon't mention the prediction 1 or 0, just mention the personality type. \nSample response should the suggestions don't mention based on inputs.\n\n{system_instruction}"
+        print(f"Prompt for Gemini: {prompt}")
+
+        # ✅ Use list format — Gemini prefers this
+        response = model.generate_content([prompt])
+        
+        if response and hasattr(response, 'text'):
+            suggestions = markdown.markdown(response.text.strip())
+            print("Response from Gemini:\n", suggestions)
+        else:
+            print("⚠️ Gemini returned no usable text.")
+            suggestions = "⚠️ AI did not return any suggestions. Please try again."
+
+    except Exception as e:
+        print(f"Error generating suggestions: {e}")
+        suggestions = "⚠️ Unable to generate suggestions at the moment. Please try again later."
+
+    # --- Final Step: Return template with suggestions ---
+    return render_template('genai.html', result_data=result_data, suggestions=suggestions)
 
 @app.route('/about')
 def about():

@@ -11,5 +11,6 @@ xgboost
 plotly
 nbformat
 google-generativeai
+markdown
 
 -e .
