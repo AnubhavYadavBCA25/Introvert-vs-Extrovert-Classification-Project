@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 from src.exception import CustomException
 import sys
@@ -33,7 +33,7 @@ safety_settings = [
 
 # Generation Configurations
 generation_config = {
-    "temperature": 0.4,
+    "temperature": 0.7,
     "top_p": 0.95,
     "top_k": 30,
     "max_output_tokens": 1000,
@@ -57,6 +57,13 @@ app.secret_key = GEMINI_API_KEY
 
 # Gemini GenAI Model Configuration
 model = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config=generation_config,
+    safety_settings=safety_settings,
+    system_instruction=system_instruction
+)
+
+model_chat_bot = genai.GenerativeModel(
     model_name='gemini-1.5-flash',
     generation_config=generation_config,
     safety_settings=safety_settings
@@ -105,12 +112,12 @@ def predict():
 def genai():
     result_data = session.get("result_data", None)
     if result_data is None:
-        return redirect('/')  # fallback
+        return redirect(url_for('home', showpopup=1))  # fallback
 
     suggestions = ""
 
     try:
-        # --- Step 1: Prompt generation ---
+        #Prompt generation
         user_input_summary = "\n".join([
             f"{key.replace('_', ' ')}: {value}"
             for key, value in result_data.items() if key != "Prediction"
@@ -118,7 +125,7 @@ def genai():
         personality = result_data["Prediction"]
 
         prompt = f"User is predicted to be an '{personality}'.\nHere are the details:\n{user_input_summary}. \nDon't mention the prediction 1 or 0, just mention the personality type. \nSample response should the suggestions don't mention based on inputs.\n\n{system_instruction}"
-        print(f"Prompt for Gemini: {prompt}")
+        # print(f"Prompt for Gemini: {prompt}")
 
         # ✅ Use list format — Gemini prefers this
         response = model.generate_content([prompt])
@@ -136,6 +143,55 @@ def genai():
 
     # --- Final Step: Return template with suggestions ---
     return render_template('genai.html', result_data=result_data, suggestions=suggestions)
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        # Get user message
+        user_input = request.json.get('message')
+        if not user_input:
+            return jsonify({'response': "No input received."}), 400
+
+        # Get user context
+        user_data = session.get("result_data", None)
+        if not user_data:
+            return jsonify({'response': "Prediction data missing. Please complete the prediction first."}), 400
+
+        # Build context string
+        personality = "Introvert 🧍‍♂️" if user_data["Prediction"] == 1 else "Extrovert 🗣️"
+        context_info = f"""
+        The user is a {personality}.
+        Time Spent Alone: {user_data["Time_spent_Alone"]} hrs/day,
+        Stage Fear: {user_data["Stage_fear"]},
+        Social Events/Week: {user_data["Social_event_attendance"]},
+        Going Outside: {user_data["Going_outside"]},
+        Drained After Socializing: {user_data["Drained_after_socializing"]},
+        Friends Circle Size: {user_data["Friends_circle_size"]},
+        Post Frequency: {user_data["Post_frequency"]}
+        """
+
+        # System instruction
+        prompt = f"""
+            You are a friendly AI mental well-being assistant trained to support personality-based interaction.
+
+            Based on the user's personality and behavior traits:
+
+            {context_info}
+
+            User says: "{user_input}"
+
+            Now respond in a kind, helpful, and psychologically-aware tone. Keep the response concise and conversational.
+
+            Don't provide suggestions or advice unless explicitly asked. Focus on understanding and engaging with the user's input.
+            """
+
+        response = model_chat_bot.generate_content(prompt)
+        bot_reply = markdown.markdown(response.text.strip())
+
+        return jsonify({'response': bot_reply})
+
+    except Exception as e:
+        return jsonify({'response': f"Something went wrong: {str(e)}"}), 500
 
 @app.route('/about')
 def about():

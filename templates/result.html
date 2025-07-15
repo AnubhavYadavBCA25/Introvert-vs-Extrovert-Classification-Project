@@ -9,12 +9,12 @@
     <div class="row justify-content-center align-items-center">
 
       <!-- Image & Prediction -->
-      <div class="col-md-4 text-center">
+      <div class="col-md-4 d-flex flex-column align-items-center">
         {% if result['Prediction'] == 1 %}
-          <img src="{{ url_for('static', filename='images/introvert.jpg') }}" class="img-fluid mb-4" style="max-width: 250px;">
+          <img src="{{ url_for('static', filename='images/introvert.jpg') }}" class="img-fluid mb-3" style="max-width: 250px;">
           <h4 class="text-light">You are an <strong>Introvert</strong> 🧍‍♂️</h4>
         {% elif result['Prediction'] == 0 %}
-          <img src="{{ url_for('static', filename='images/extrovert.jpg') }}" class="img-fluid mb-4" style="max-width: 250px;">
+          <img src="{{ url_for('static', filename='images/extrovert.jpg') }}" class="img-fluid mb-3" style="max-width: 250px;">
           <h4 class="text-light">You are an <strong>Extrovert</strong> 🗣️</h4>
         {% else %}
           <h4 class="text-warning">Unable to determine your personality. Please try again.</h4>
@@ -22,8 +22,8 @@
       </div>
 
       <!-- User Input Data -->
-      <div class="col-md-6">
-        <div class="card bg-light shadow p-4">
+      <div class="col-md-6 d-flex align-items-center">
+        <div class="card bg-light shadow p-4 w-100">
           <h5 class="mb-3">Your Responses:</h5>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Time Spent Alone: {{ result['Time_spent_Alone'] }} hrs</li>

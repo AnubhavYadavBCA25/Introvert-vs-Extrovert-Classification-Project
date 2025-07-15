@@ -8,21 +8,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+{% if request.args.get('showpopup') %}
+<!-- Toast Container at Top Center -->
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 9999;">
+  <div id="predictionToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ⚠️ Please complete your Prediction first to access the AI Bot feature.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toastLive = document.getElementById('predictionToast');
+  const toast = new bootstrap.Toast(toastLive, { delay: 5000 });
+  toast.show();
+</script>
+{% endif %}
 <body>
     {% include 'navbar.html' %}
 
-    <div class="container py-5">
+    <div class="container pt-5 pb-1">
         <h1 class="text-center fw-bold mb-5">🧠 Personality Classification using Behavioral Traits</h1>
     </div>
         <!-- Section 1: Project Overview (Left Text, Right Image) -->
-        <div class="row align-items-center dark-section" style="padding-left: 250px;">
+        <div class="row align-items-center dark-section">
             <div class="col-md-6">
-                <h2 class="section-title">📌 Project Overview</h2>
-                <p class="lead" style="text-align: justify; text-justify: inter-word;">This project aims to classify individuals as Introverts or Extroverts using behavioral data such as social activity, screen time, and personal habits.</p>
-                <p class="lead" style="text-align: justify; text-justify: inter-word;">It combines traditional machine learning with modern GenAI features to provide a hybrid, intelligent personality assessment tool.</p>
+                <h2 class="section-title">Project Overview</h2>
+                <p class="lead" style="text-align: justify; text-justify: inter-word;">This AI-powered web application helps users discover whether they lean more towards an <strong>Introverted</strong> or <strong>Extroverted</strong> personality — based on behavioral data. It not only predicts personality traits using machine learning but also provides <strong>personalized suggestions</strong> and a real-time <strong>AI ChatBot</strong> to guide users on how to evolve their personality effectively.</p>
+                <p class="lead" style="text-align: justify; text-justify: inter-word;">This project transforms traditional personality prediction into a dynamic, user-centric experience by integrating data-driven machine learning with the conversational power of GenAI — helping users not just understand, but also evolve their personality.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0">
-                <img src="{{ url_for('static', filename='images/overview.png') }}" alt="Project Overview" class="section-img">
+                <img src="{{ url_for('static', filename='images/overview.png') }}" alt="Project Overview" class="section-img" width="350" height="350">
             </div>
         </div>
 
@@ -36,14 +55,13 @@
                 </div>
                 <!-- Right Column: Text -->
                 <div class="col-md-6">
-                    <h2 class="section-title">🎯 Project Goals</h2>
-                    <p class="lead" style="text-align: justify; text-justify: inter-word;">
-                        To build an end-to-end machine learning pipeline that can predict personality types based on simple user inputs,
-                        while also delivering personalized GenAI-based suggestions for personality development.
-                    </p>
-                    <p class="lead" style="text-align: justify; text-justify: inter-word;">
-                        It solves the problem of impersonal assessments and provides a more interactive way to understand human behavior through data.
-                    </p>
+                    <h2 class="section-title">Project Goals</h2>
+                    <ul>
+                        <li>✅ Predict user's personality type (Introvert or Extrovert) based on input traits.</li>
+                        <li>🧠 Generate AI-based suggestions to help users improve or embrace their personality.</li>
+                        <li>🤖 Enable an intelligent chatbot that users can chat with for personalized guidance.</li>
+                        <li>📄 Provide users with a detailed report that can be downloaded as a PDF.</li>
+                    </ul>
                 </div>
                 </div>
             </div>
@@ -51,14 +69,14 @@
 
 
         <!-- Section 3: Tech Stacks (Left Text, Right Image) -->
-        <div class="row align-items-center dark-section" style="padding-left: 250px;">
+        <div class="row align-items-center dark-section">
             <div class="col-md-6">
-                <h2 class="section-title">🛠️ Tech Stack</h2>
+                <h2 class="section-title">Tech Stack</h2>
                 <ul class="lead">
-                    <li>Python (Pandas, NumPy, Scikit-learn, Matplotlib)</li>
+                    <li>Python (Pandas, NumPy, Scikit-Learn, Matplotlib)</li>
                     <li>Flask (Web App Framework)</li>
-                    <li>HTML5, CSS3, Bootstrap 5</li>
-                    <li>OpenAI/Gemini API for GenAI features</li>
+                    <li>HTML5, CSS3, Bootstrap 5 and JS</li>
+                    <li>Gemini API for GenAI features</li>
                     <li>Jinja2 (for dynamic HTML templates)</li>
                 </ul>
             </div>
