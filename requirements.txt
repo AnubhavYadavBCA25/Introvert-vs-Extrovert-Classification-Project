@@ -12,5 +12,6 @@ plotly
 nbformat
 google-generativeai
 markdown
+gunicorn
 
 -e .
