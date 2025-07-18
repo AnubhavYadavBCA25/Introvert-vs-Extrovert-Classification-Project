@@ -106,6 +106,23 @@ flask run
 
 ---
 
+## Web App UI
+![Index Page 1](web_ui_images/index.png)
+![Index Page 2](web_ui_images/index-2.png)
+*Figure: Home Page*
+
+![Prediction Page](web_ui_images/prediction.png)
+*Figure: Prediction Page*
+
+![Result Page](web_ui_images/result.png)
+*Figure: Result Page*
+
+![GenAI Report Page](web_ui_images/genai-report.png)
+*Figure: GenAI Report Page*
+
+![About Me Page](web_ui_images/about.png)
+*Figure: About Me Page*
+
 ## About
 Created by Anubhav Yadav – passionate about blending data and AI for meaningful user experiences.
 Say hi: [GitHub](https://github.com/AnubhavYadavBCA25)
